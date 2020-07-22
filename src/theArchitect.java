@@ -5,33 +5,11 @@ public class theArchitect {
 
     private static ArrayList<Chlopak> listaChlopakow = new ArrayList<Chlopak>();
     public static Scanner scanner = new Scanner(System.in);
+    public static ArrayList<Atak> listaAtakow = new ArrayList<Atak>();
 
     public static void initiate()
     {
-        Atak shoot = new Atak("Strzał",5,5);
-        Atak kick = new Atak("Kopnięcie",3,3);
-        Atak aim = new Atak("Przycelowany strzał",10,10);
-        Atak punch = new Atak("Mocne uderzenie",7,7);
-
-        ArrayList<Atak> jedenAtaki = new ArrayList<Atak>();
-        jedenAtaki.add(shoot);
-        jedenAtaki.add(aim);
-
-        ArrayList<Atak> dwaAtaki = new ArrayList<Atak>();
-        dwaAtaki.add(kick);
-        dwaAtaki.add(punch);
-
-        Chlopak jeden = new Chlopak(jedenAtaki,15,20,"Strzelec");
-        Chlopak dwa = new Chlopak(dwaAtaki,20,20,"Wojownik");
-
-        listaChlopakow.add(jeden);
-        listaChlopakow.add(dwa);
-//
-//        for(int i =0;i<listaChlopakow.size();i++)
-//        {
-//            System.out.println("Chlopak "+ listaChlopakow.get(i).getName()+" został stworzony. Ma ataki: "+listaChlopakow.get(i).getAtaki().get(0).getName()+" oraz "+ listaChlopakow.get(i).getAtaki().get(1).getName());
-//        }
-
+        createChlopaki();
         System.out.println("\n\n\n*****  Witamy w grze!!  ******\n\n\n");
     }
 
@@ -66,6 +44,48 @@ public class theArchitect {
 
         return przeciwnik;
 
+    }
+
+    public static void createAtaki()
+    {
+
+        addAtt("Strzał",5,4,"Hubert");
+        addAtt("Przycelowany strzał",10,7,"Hubert");
+        addAtt("Teleportacja i strzał w plecy",5,6,"Hubert");
+        addAtt("Zapadnia", 1,0,"Hubert");
+
+        addAtt("Trzepotanie skrzydłami",4,2,"Dawid");
+        addAtt("Strzał z łuku",2,1,"Dawid");
+        addAtt("Wir powietrzny",7,5,"Dawid");
+        addAtt("Ucieczka",-3,-2,"Dawid");
+
+        addAtt("Kręcenie na nogach",7,8,"Marek");
+        addAtt("Mocne uderzenie",7,7,"Marek");
+        addAtt("Kopnięcie",3,3,"Marek");
+        addAtt("Zebranie energii", 0,-3,"Marek");
+
+
+    }
+
+    public static void createChlopaki()
+    {
+        createAtaki();
+
+        Chlopak hubert = new Chlopak(15,20,"Hubert");
+        Chlopak marek = new Chlopak(20,20,"Marek");
+        Chlopak dawid = new Chlopak(10,15,"Dawid");
+
+
+        listaChlopakow.add(hubert);
+        listaChlopakow.add(marek);
+        listaChlopakow.add(dawid);
+
+    }
+
+    public static void addAtt (String nazwaAtaku,int damageDone,int initiativeCost,String chlopakID)
+    {
+        Atak atak = new Atak (nazwaAtaku,damageDone,initiativeCost,chlopakID);
+        listaAtakow.add(atak);
     }
 
 

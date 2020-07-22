@@ -1,4 +1,4 @@
-import java.sql.SQLOutput;
+
 import java.util.ArrayList;
 
 public class Chlopak {
@@ -16,11 +16,11 @@ public class Chlopak {
         this.name = chlopak.name;
     }
 
-    public Chlopak(ArrayList<Atak> ataki, int healthPoints, int initiativePoints, String name) {
-        this.ataki = ataki;
+    public Chlopak(int healthPoints, int initiativePoints, String name) {
         this.healthPoints = healthPoints;
         this.initiativePoints = initiativePoints;
         this.name = name;
+        this.ataki = znajdzAtaki();
     }
 
     public ArrayList<Atak> getAtaki() {
@@ -41,11 +41,29 @@ public class Chlopak {
 
     public void printAtaki()
     {
+        znajdzAtaki();
+
         System.out.println("Twoje dostępne ataki: ");
         for (int i = 0;i<ataki.size();i++)
         {
             System.out.println(i+ ": "+ataki.get(i).getName()+" - "+ataki.get(i).getDamageDone()+" DMG | koszt "+ataki.get(i).getInitiativeCost()+" INIT");
         }
+    }
+
+    private ArrayList<Atak> znajdzAtaki()
+    {
+        ArrayList <Atak> atakiChlopaka = new ArrayList<Atak>();
+
+        for(int i = 0;i<theArchitect.listaAtakow.size();i++)
+        {
+            if(this.name.equals(theArchitect.listaAtakow.get(i).getChlopakID()))
+            {
+                atakiChlopaka.add(theArchitect.listaAtakow.get(i));
+                System.out.println("Przydzielono dla: "+this.name.toUpperCase()+" atak --- "+theArchitect.listaAtakow.get(i).getName());
+            }
+        }
+
+        return atakiChlopaka;
     }
 
 

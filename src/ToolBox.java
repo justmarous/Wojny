@@ -30,4 +30,24 @@ public class ToolBox {
         }
         System.out.println();
     }
+
+    public static void komunikatInicjatywa(Chlopak gracz,Chlopak przeciwnik)
+    {
+        if(gracz.getInitiativePoints()>=przeciwnik.getInitiativePoints())
+        {
+            System.out.println("\nZaczynasz walkę! Powodzenia.\n");
+        }
+
+        else
+        {
+            System.out.println("Grę zaczyna wróg: "+przeciwnik.getName());
+        }
+    }
+
+    public static void start()
+    {
+        ToolBox.time(8);
+        theArchitect.initiate();
+        ToolBox.time(5);
+    }
 }
