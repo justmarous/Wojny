@@ -22,8 +22,10 @@ public class Walka {
         System.out.println("Twoje dostępne ataki: "+gracz.getAtaki());
     }
 
-    public static void walka(Chlopak gracz,Chlopak przeciwnik)
+    public static boolean walka(Chlopak gracz,Chlopak przeciwnik,int tryb)
     {
+
+
         int graczHp = gracz.getHealthPoints();
         int przeciwnikHp = przeciwnik.getHealthPoints();
 
@@ -33,63 +35,142 @@ public class Walka {
         boolean narpiej = inicjatywa(gracz,przeciwnik);
         WynikWalki uderzenie;
 
-        if(narpiej) {
-            ToolBox.timeClean(7);
-
-            uderzenie = ruch(gracz,graczInit);
-            przeciwnikHp -= uderzenie.getHpDamage();
-            graczInit -= uderzenie.getInitCost();
-        }
-
-
-        while(graczHp>0&&przeciwnikHp>0)
-        {ToolBox.timeClean(7);
-
-
-            uderzenie = ruchAI(przeciwnik,przeciwnikInit);
-            graczHp-=uderzenie.getHpDamage();
-            przeciwnikInit-=uderzenie.getInitCost();
-            ToolBox.timeClean(7);
-
-            if(narpiej)System.out.println("Gracz ma "+graczHp+" HP || przeciwnik ma "+przeciwnikHp+" HP");
-            ToolBox.timeClean(7);
-
-            uderzenie = ruch(gracz, graczInit);
-            przeciwnikHp -= uderzenie.getHpDamage();
-            graczInit -= uderzenie.getInitCost();
-            ToolBox.timeClean(7);
-
-            if(!narpiej)System.out.println("Gracz ma "+graczHp+" HP || przeciwnik ma "+przeciwnikHp+" HP");
-
-        }
-        if(graczHp <=0 )
+        switch (tryb)
         {
-            ToolBox.timeClean(7);
+            case 0: // p vs e
+                if (narpiej) {
+                    ToolBox.timeClean(7);
 
-            System.out.println("Zostałeś pokonany przez "+przeciwnik.getName());
-        }
-        else
-        {
-            ToolBox.timeClean(7);
+                    uderzenie = ruchHuman(gracz, graczInit);
+                    //  uderzenie = ruch(gracz,graczInit,tryb);
+                    przeciwnikHp -= uderzenie.getHpDamage();
+                    graczInit -= uderzenie.getInitCost();
 
-            System.out.println("Wygrałeś z "+przeciwnik.getName());
+                }
+                while (graczHp > 0 && przeciwnikHp > 0) {
+                    ToolBox.timeClean(7);
+
+
+                    uderzenie = ruchAI(przeciwnik, przeciwnikInit);
+                    graczHp -= uderzenie.getHpDamage();
+                    przeciwnikInit -= uderzenie.getInitCost();
+                    ToolBox.timeClean(7);
+
+                    if (narpiej)
+                        System.out.println("Gracz ma " + graczHp + " HP || przeciwnik ma " + przeciwnikHp + " HP");
+                    ToolBox.timeClean(7);
+
+                    if (graczHp <= 0) break;
+
+                    uderzenie = ruchHuman(gracz, graczInit);
+                    przeciwnikHp -= uderzenie.getHpDamage();
+                    graczInit -= uderzenie.getInitCost();
+                    ToolBox.timeClean(7);
+
+                    if (!narpiej)
+                        System.out.println("Gracz ma " + graczHp + " HP || przeciwnik ma " + przeciwnikHp + " HP");
+
+                }
+                break;
+            case 1: // p vs p
+                if (narpiej) {
+                    ToolBox.timeClean(7);
+
+                    uderzenie = ruchHuman(gracz, graczInit);
+                    przeciwnikHp -= uderzenie.getHpDamage();
+                    graczInit -= uderzenie.getInitCost();
+
+                }
+                while (graczHp > 0 && przeciwnikHp > 0) {
+                    ToolBox.timeClean(7);
+
+
+                    uderzenie = ruchHuman(przeciwnik, przeciwnikInit);
+                    graczHp -= uderzenie.getHpDamage();
+                    przeciwnikInit -= uderzenie.getInitCost();
+                    ToolBox.timeClean(7);
+
+                    if (narpiej)
+                        System.out.println("Gracz ma " + graczHp + " HP || przeciwnik ma " + przeciwnikHp + " HP");
+                    ToolBox.timeClean(7);
+
+                    if (graczHp <= 0) break;
+
+                    uderzenie = ruchHuman(gracz, graczInit);
+                    przeciwnikHp -= uderzenie.getHpDamage();
+                    graczInit -= uderzenie.getInitCost();
+                    ToolBox.timeClean(7);
+
+                    if (!narpiej)
+                        System.out.println("Gracz ma " + graczHp + " HP || przeciwnik ma " + przeciwnikHp + " HP");
+
+                }
+                break;
+            case 2 ://e vs e
+                if (narpiej) {
+                    ToolBox.timeClean(7);
+
+                    uderzenie = ruchAI(gracz, graczInit);
+                    przeciwnikHp -= uderzenie.getHpDamage();
+                    graczInit -= uderzenie.getInitCost();
+
+                }
+                while (graczHp > 0 && przeciwnikHp > 0) {
+                    ToolBox.timeClean(7);
+
+
+                    uderzenie = ruchAI(przeciwnik, przeciwnikInit);
+                    graczHp -= uderzenie.getHpDamage();
+                    przeciwnikInit -= uderzenie.getInitCost();
+                    ToolBox.timeClean(7);
+
+                    if (narpiej)
+                        System.out.println("Gracz ma " + graczHp + " HP || przeciwnik ma " + przeciwnikHp + " HP");
+                    ToolBox.timeClean(7);
+
+                    if (graczHp <= 0) break;
+
+                    uderzenie = ruchAI(gracz, graczInit);
+                    przeciwnikHp -= uderzenie.getHpDamage();
+                    graczInit -= uderzenie.getInitCost();
+                    ToolBox.timeClean(7);
+
+                    if (!narpiej)
+                        System.out.println("Gracz ma " + graczHp + " HP || przeciwnik ma " + przeciwnikHp + " HP");
+
+                }
+                break;
         }
+            if (graczHp <= 0) {
+                ToolBox.timeClean(7);
+
+                System.out.println("Zostałeś pokonany przez " + przeciwnik.getName());
+                return false;
+            } else {
+                ToolBox.timeClean(7);
+
+                System.out.println("Wygrałeś z " + przeciwnik.getName());
+                return true;
+            }
+
+
     }
 
-    public static WynikWalki ruch(Chlopak chlopak,int init)
+    public static WynikWalki ruchHuman(Chlopak chlopak, int init)
     {
         WynikWalki wynik;
         if(sprawdzAtaki(chlopak,init))
         {
-            System.out.println("Wybierz swój atak...\n\t masz obecnie "+init+" punktów inicjatywy");
+            System.out.println("Wybierz swój atak...\n\t masz obecnie "+init+" pkt inicjatywy");
             chlopak.printAtaki();
 
             int choice = scanner.nextInt();
 
-            if(chlopak.getAtaki().get(choice).getInitiativeCost()>init)
+            while(chlopak.getAtaki().get(choice).getInitiativeCost()>init)
             {
                 System.out.println("Nie masz siły by wykonać ten atak");
-                choice = 0;
+                System.out.println("Wybierz swój atak...\n\t masz obecnie "+init+" pkt inicjatywy");
+                choice = scanner.nextInt();
             }
 
             Atak atak = chlopak.getAtaki().get(choice);
@@ -98,7 +179,7 @@ public class Walka {
             init -= atak.getInitiativeCost();
             ToolBox.timeClean(7);
 
-            System.out.println("\tAtak odbiera " + atak.getDamageDone() + " punktów życia \n \tZostało Ci jeszcze " + init + " punktów inicjatywy\n");
+            System.out.println("\tAtak odbiera " + atak.getDamageDone() + " pkt życia \n \tZostało Ci jeszcze " + init + " pkt inicjatywy\n");
 
             wynik = new WynikWalki(atak.getDamageDone(), atak.getInitiativeCost());
 
@@ -116,17 +197,25 @@ public class Walka {
 
     public static WynikWalki ruchAI(Chlopak chlopak,int init)
     {
+        int random = 0;
+        Atak atak;
+
         ToolBox.timeClean(7);
 
-        Atak atak = chlopak.getAtaki().get(0);
+        do {
+
+            random = (int)(4*Math.random());
+
+            atak = chlopak.getAtaki().get(random);
+
+
+        }while(init < chlopak.getAtaki().get(random).getInitiativeCost());
+
+
         System.out.println("Przeciwnik atakuje: "+atak.getName());
-
         ToolBox.timeClean(7);
-
-        System.out.println("\tAtak odbiera Ci "+atak.getDamageDone()+" punktów życia\n\t");
-
+        System.out.println("\tAtak odbiera "+atak.getDamageDone()+" pkt życia\n\t");
         WynikWalki wynik = new WynikWalki(atak.getDamageDone(),atak.getInitiativeCost());
-
         return wynik;
     }
 
@@ -138,5 +227,18 @@ public class Walka {
         }
         return false;
     }
+
+//    private static void ruch(Chlopak przeciwnik, Chlopak gracz,int tryb)
+//    {
+//        //tryb pve 0
+//        //tryb pvp 1
+//        //tryb eve 2
+//
+//        switch (tryb)
+//        {
+//            case 0:
+//            {
+//        }
+//    }
 
 }

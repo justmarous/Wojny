@@ -43,7 +43,7 @@ public class Chlopak {
     {
         znajdzAtaki();
 
-        System.out.println("Twoje dostępne ataki: ");
+        System.out.println("Twoje dostępne ataki: "+this.name.toUpperCase());
         for (int i = 0;i<ataki.size();i++)
         {
             System.out.println(i+ ": "+ataki.get(i).getName()+" - "+ataki.get(i).getDamageDone()+" DMG | koszt "+ataki.get(i).getInitiativeCost()+" INIT");
@@ -59,7 +59,7 @@ public class Chlopak {
             if(this.name.equals(theArchitect.listaAtakow.get(i).getChlopakID()))
             {
                 atakiChlopaka.add(theArchitect.listaAtakow.get(i));
-                System.out.println("Przydzielono dla: "+this.name.toUpperCase()+" atak --- "+theArchitect.listaAtakow.get(i).getName());
+//                System.out.println("Przydzielono dla: "+this.name.toUpperCase()+" atak --- "+theArchitect.listaAtakow.get(i).getName());
             }
         }
 
